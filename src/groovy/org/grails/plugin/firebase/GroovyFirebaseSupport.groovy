@@ -1,5 +1,8 @@
 package org.grails.plugin.firebase
 
+import groovy.util.logging.Log4j
+
+@Log4j
 class GroovyFirebaseSupport {
 
     static def doWithSpring = { application ->
@@ -7,9 +10,10 @@ class GroovyFirebaseSupport {
         def _url = !firebase.contains('http') ? "https://${firebase}.firebaseio.com" : firebase ?: ''
 
         if(!_url) {
-            println "Url missing in config"
+            log.debug "Url missing in config"
         }
 
+        // Register as a bean
         firebaseRef(GroovyFirebase, _url)
     }
 }

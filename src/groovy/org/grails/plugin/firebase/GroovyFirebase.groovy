@@ -7,44 +7,47 @@ import com.firebase.client.FirebaseError
 import com.firebase.client.GenericTypeIndicator
 import com.firebase.client.ValueEventListener
 import groovy.transform.InheritConstructors
+import groovy.util.logging.Log4j
 
 @InheritConstructors
+@Log4j
 class GroovyFirebase extends Firebase {
+
     public on(String type, Closure callback) {
         switch(type){
             case 'value':
-                onValue(callback)
+                onValue callback
                 break
             case ['childAdded', 'childChanged', 'childRemoved']:
-                onChild(type, callback)
+                onChild type, callback
                 break
             default:
-                println "No event callback registered"
+                log.error "No event callback registered"
         }
     }
 
     public onValue(Closure callback){
-        this.addValueEventListener registerValueEventListener(callback)
+        addValueEventListener registerValueEventListener(callback)
     }
 
     private onChild(String type, Closure callback){
-        this.addChildEventListener registerChildEventListener(type, callback)
+        addChildEventListener registerChildEventListener(type, callback)
     }
 
     public onChildAdded(Closure callback){
-        this.addChildEventListener registerChildEventListener('childAdded', callback)
+        addChildEventListener registerChildEventListener('childAdded', callback)
     }
 
     public onChildChanged(Closure callback){
-        this.addChildEventListener registerChildEventListener('childChanged', callback)
+        addChildEventListener registerChildEventListener('childChanged', callback)
     }
 
     public onChildRemoved(Closure callback){
-        this.addChildEventListener registerChildEventListener('childRemoved', callback)
+        addChildEventListener registerChildEventListener('childRemoved', callback)
     }
 
     public once(Closure callback) {
-        this.addListenerForSingleValueEvent registerValueEventListener(callback)
+        addListenerForSingleValueEvent registerValueEventListener(callback)
     }
 
     private ValueEventListener registerValueEventListener(Closure callback){
