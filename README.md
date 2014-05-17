@@ -10,17 +10,24 @@ Firebase-powered apps work offline. Data is synchronized instantly when app rega
 
 Firebase is not only targeted for client apps but also for servers. [This blog shows](https://www.firebase.com/blog/2013-03-25-where-does-firebase-fit.html) shows where in a technology stack firebase fits in.
 
+Installation
+------------
+
+    plugins {
+        compile ':firebase:0.0.1'
+    }
+
 Usage
 -----
 
 This plugin registers a bean `firebaseRef` which extends [Firebase](https://www.firebase.com/docs/java-api/javadoc/index.html) and implements methods in a Groovier way.
 
-Steps:
+== Steps:
 
 1. Sign up in Firebase.com to create a Firebase Data Structure.
 2. Use the data structure id `abcd-fire-7000` from the URL for example (https://abcd-fire-7000.firebaseio.com) in the below config setting in `Config.groovy`
 
-Example:
+== Example:
 
     grails {
         plugin {
