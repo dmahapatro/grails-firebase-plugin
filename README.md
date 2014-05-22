@@ -8,7 +8,7 @@ Firebase-powered apps work offline. Data is synchronized instantly when app rega
 
 [Data Structure](https://www.firebase.com/docs/data-structure.html) in firebase is designed to be represented by a specific URL and the client can register a listener/callback to accomplish an event when a particular element has changed/added/removed. This plugin is a grails wrapper over the Firebase Java client to accomplish the callback functionalitly on modification of data. 
 
-Firebase is not only targeted for client apps but also for servers. [This blog shows](https://www.firebase.com/blog/2013-03-25-where-does-firebase-fit.html) shows where in a technology stack firebase fits in.
+Firebase is not only targeted for client apps but also for servers. [This blog](https://www.firebase.com/blog/2013-03-25-where-does-firebase-fit.html) shows where in a technology stack firebase fits in.
 
 Installation
 ------------
@@ -28,6 +28,7 @@ This plugin registers a bean `firebaseRef` which extends [Firebase](https://www.
 
 1. Sign up in Firebase.com to create a Firebase Data Structure.
 2. Use the data structure id `abcd-fire-7000` from the URL for example (https://abcd-fire-7000.firebaseio.com) in the below config setting in `Config.groovy`
+3. Add the `secretKey` provided by Firebase in order to generate a token which will be used for authentication. Custom Authentication is used for this plugin.
 
 **Example:**
 
@@ -36,13 +37,13 @@ grails {
     plugin {
         firebase {
             base = "abcd-fire-7000"
+            secretKey = "a5b8c5d8e9f3g7h1i1j0k5l2m2n4o8p4q4r8s7t6u9v7w8x8y8z5"
         }
     }
 }
 ```
     
 To use firebase inject `firebaseRef` in any of the grails artifact:
-
 
 ```groovy
 //Service class
@@ -65,14 +66,14 @@ def method() {
 
     // Writing data as a child
     firebaseRef.value  = [
-            address: [
-                    street: '123 Main Street',
-                    apt: 123,
-                    city: 'Columbus',
-                    zip: 43230,
-                    state: 'OH',
-                    country: 'USA'
-            ]
+        address: [
+            street: '123 Main Street',
+            apt: 123,
+            city: 'Columbus',
+            zip: 43230,
+            state: 'OH',
+            country: 'USA'
+        ]
     ]
     
     // Child Event Listener for add event
@@ -123,8 +124,7 @@ def method() {
 }
 ```
     
-    
-TODO:
+TODO
 -----
 
  - Add transactional feature
