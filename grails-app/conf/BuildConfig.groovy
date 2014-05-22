@@ -10,6 +10,7 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         compile 'com.firebase:firebase-client:1.0.12'
+        compile 'com.firebase:firebase-token-generator:1.0.4'
     }
 
     plugins {

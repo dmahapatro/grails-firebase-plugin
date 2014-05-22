@@ -9,9 +9,16 @@ import com.firebase.client.ValueEventListener
 import groovy.transform.InheritConstructors
 import groovy.util.logging.Log4j
 
-@InheritConstructors
 @Log4j
+@InheritConstructors
 class GroovyFirebase extends Firebase {
+    String token
+
+    GroovyFirebase(String _url, String _token) {
+        super(_url)
+        this.token = _token
+        auth token, registerAuthListener()
+    }
 
     public on(String type, Closure callback) {
         switch(type){
@@ -114,5 +121,24 @@ class GroovyFirebase extends Firebase {
         callback.delegate = listener
         callback.resolveStrategy = Closure.DELEGATE_FIRST
         callback(childData, previousChildName, firebaseError)
+    }
+
+    private Firebase.AuthListener registerAuthListener(){
+        new Firebase.AuthListener(){
+            @Override
+            public void onAuthError(FirebaseError error) {
+                log.debug "Login Failed! " + error.message
+            }
+
+            @Override
+            public void onAuthSuccess(Object authData) {
+                log.debug "Login Succeeded!"
+            }
+
+            @Override
+            public void onAuthRevoked(FirebaseError error) {
+                log.debug "Authentication status was cancelled! " + error.message
+            }
+        }
     }
 }
